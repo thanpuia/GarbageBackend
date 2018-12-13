@@ -1,0 +1,148 @@
+{
+  "project_info": {
+    "project_number": "738692292010",
+    "firebase_url": "https://garbage-truck-reremake.firebaseio.com",
+    "project_id": "garbage-truck-reremake",
+    "storage_bucket": "garbage-truck-reremake.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:738692292010:android:332df0402f6e1cf3",
+        "android_client_info": {
+          "package_name": "com.example.lalthanpuia.blablabla"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "738692292010-qddh7m1ccv0o67f04q7llagak1l46stg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiUwdBdXVbvEQbtKKuZxcMbgOCl8Nrc_w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:738692292010:android:5e7a7080f134708e",
+        "android_client_info": {
+          "package_name": "com.example.lalthanpuia.garbagetruckreremakeclientside"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "738692292010-qddh7m1ccv0o67f04q7llagak1l46stg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiUwdBdXVbvEQbtKKuZxcMbgOCl8Nrc_w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:738692292010:android:c897c5adff46347f",
+        "android_client_info": {
+          "package_name": "com.example.lalthanpuiachhangte.garbagebackend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "738692292010-qddh7m1ccv0o67f04q7llagak1l46stg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiUwdBdXVbvEQbtKKuZxcMbgOCl8Nrc_w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:738692292010:android:a595aba7ac94bb10",
+        "android_client_info": {
+          "package_name": "com.example.lalthanpuiachhangte.garbagetruckreremake"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "738692292010-94nu8bcfpugt0etfte5go4phrua2nvgn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lalthanpuiachhangte.garbagetruckreremake",
+            "certificate_hash": "67218b5907bda5a174e3087f39c933db1b37ee5c"
+          }
+        },
+        {
+          "client_id": "738692292010-qddh7m1ccv0o67f04q7llagak1l46stg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiUwdBdXVbvEQbtKKuZxcMbgOCl8Nrc_w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "738692292010-qddh7m1ccv0o67f04q7llagak1l46stg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
