@@ -17,6 +17,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import android.Manifest;
 
+import java.text.DecimalFormat;
+
 public class MainActivity extends AppCompatActivity {
 
     public DatabaseReference databaseReference;
@@ -52,8 +54,15 @@ public class MainActivity extends AppCompatActivity {
                 databaseReference = FirebaseDatabase.getInstance().getReference();
                 String newKey = databaseReference.child("truck-2/location/").push().getKey();
 
-                databaseReference.child("truck-2/location/"+ newKey).child("latitude").setValue(location.getLatitude());
+                DecimalFormat decimalFormat = new DecimalFormat("#.######");
+                String doubleLat = decimalFormat.format(location.getLatitude());
+                String doubleLng = decimalFormat.format(location.getLongitude());
+
+                /*databaseReference.child("truck-2/location/"+ newKey).child("latitude").setValue(location.getLatitude());
                 databaseReference.child("truck-2/location/"+ newKey).child("longitude").setValue(location.getLongitude());
+*/              databaseReference.child("truck-2/location/"+ newKey).child("latitude").setValue(doubleLat);
+                databaseReference.child("truck-2/location/"+ newKey).child("longitude").setValue(doubleLng);
+
             }
             @Override public void onStatusChanged(String provider, int status, Bundle extras) { }
             @Override public void onProviderEnabled(String provider) { }
@@ -63,6 +72,11 @@ public class MainActivity extends AppCompatActivity {
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,800,5,locationListener);
     }
 
+    /*
+
+        THIS LINE UP TO THE END ASKED FOR THE USER PERMISSION FOR TURNING ON THE GPS
+
+    */
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
     public boolean checkLocationPermission() {
