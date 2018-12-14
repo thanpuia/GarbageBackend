@@ -19,6 +19,7 @@ import android.Manifest;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     public DatabaseReference databaseReference;
     public LocationManager locationManager;
-    public LocationListener locationListener;
+    public static LocationListener locationListener;
     public static String userSelect = "";
 
     EditText userNameET;
@@ -46,9 +47,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*
-
         THIS LINE UP TO THE END ASKED FOR THE USER PERMISSION FOR TURNING ON THE GPS
-
     */
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
@@ -116,12 +115,13 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return;
             }
-
         }
     }
 
     //LISTENNING FOR THE DRIVER LOCATION
     public void listeningDriverLocation (){
+
+        Toast.makeText(this,"Location Active",Toast.LENGTH_SHORT).show();
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -185,5 +185,10 @@ public class MainActivity extends AppCompatActivity {
                 listeningDriverLocation();
         }
 
+    }
+
+    public void inActiveClick(View view) {
+        locationListener = null;
+        Toast.makeText(this, "Location Inactive", Toast.LENGTH_SHORT).show();
     }
 }
