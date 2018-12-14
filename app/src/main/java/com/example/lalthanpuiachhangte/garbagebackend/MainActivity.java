@@ -16,6 +16,9 @@ import android.os.Bundle;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import android.Manifest;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
@@ -24,52 +27,22 @@ public class MainActivity extends AppCompatActivity {
     public DatabaseReference databaseReference;
     public LocationManager locationManager;
     public LocationListener locationListener;
+    public static String userSelect = "";
+
+    EditText userNameET;
+    TextView statusTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        userNameET = findViewById(R.id.userName);
+        statusTV = findViewById(R.id.statusTextView);
+
         //ASKED / CHECK FOR LOCATION PERMISSION
         checkLocationPermission();
 
-
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        //Location lastKnowLocation = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
-
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                databaseReference = FirebaseDatabase.getInstance().getReference();
-                String newKey = databaseReference.child("truck-2/location/").push().getKey();
-
-                DecimalFormat decimalFormat = new DecimalFormat("#.######");
-                String doubleLat = decimalFormat.format(location.getLatitude());
-                String doubleLng = decimalFormat.format(location.getLongitude());
-
-                /*databaseReference.child("truck-2/location/"+ newKey).child("latitude").setValue(location.getLatitude());
-                databaseReference.child("truck-2/location/"+ newKey).child("longitude").setValue(location.getLongitude());
-*/              databaseReference.child("truck-2/location/"+ newKey).child("latitude").setValue(doubleLat);
-                databaseReference.child("truck-2/location/"+ newKey).child("longitude").setValue(doubleLng);
-
-            }
-            @Override public void onStatusChanged(String provider, int status, Bundle extras) { }
-            @Override public void onProviderEnabled(String provider) { }
-            @Override public void onProviderDisabled(String provider) { }
-        };
-
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,800,5,locationListener);
     }
 
     /*
@@ -135,14 +108,11 @@ public class MainActivity extends AppCompatActivity {
                             == PackageManager.PERMISSION_GRANTED) {
 
                         //Request location updates:
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 1, (LocationListener) this);
+                       // locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 400, 1, (LocationListener) this);
                     }
-
                 } else {
-
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
-
                 }
                 return;
             }
@@ -150,4 +120,70 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //LISTENNING FOR THE DRIVER LOCATION
+    public void listeningDriverLocation (){
+
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+
+        //Location lastKnowLocation = locationManager.getLastKnownLocation(locationManager.GPS_PROVIDER);
+
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                databaseReference = FirebaseDatabase.getInstance().getReference();
+                String newKey = databaseReference.child(userSelect+"/location/").push().getKey();
+
+                DecimalFormat decimalFormat = new DecimalFormat("#.######");
+                String doubleLat = decimalFormat.format(location.getLatitude());
+                String doubleLng = decimalFormat.format(location.getLongitude());
+
+                /*databaseReference.child("truck-2/location/"+ newKey).child("latitude").setValue(location.getLatitude());
+                databaseReference.child("truck-2/location/"+ newKey).child("longitude").setValue(location.getLongitude());
+*/              databaseReference.child(userSelect+"/location/"+ newKey).child("latitude").setValue(doubleLat);
+                databaseReference.child(userSelect+"/location/"+ newKey).child("longitude").setValue(doubleLng);
+
+            }
+            @Override public void onStatusChanged(String provider, int status, Bundle extras) { }
+            @Override public void onProviderEnabled(String provider) { }
+            @Override public void onProviderDisabled(String provider) { }
+        };
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,800,5,locationListener);
+
+    }
+
+    //CHECKING THE TRUCK DRIVER ID
+    public void submitClick(View view) {
+        String userId= userNameET.getText().toString();
+        boolean userStatus = false;
+
+        if(userId != ""){
+            //CHECK THE UNIQUE KEY OF THE USER
+
+            switch (userId){
+                case "truck1": userSelect="truck-1"; userStatus=true; break;
+                case "truck2": userSelect="truck-2"; userStatus=true; break;
+                case "truck3": userSelect="truck-3"; userStatus=true; break;
+                case "truck4": userSelect="truck-4"; userStatus=true; break;
+                default:userSelect="invalid";
+            }
+            statusTV.setText(userSelect);
+
+            if (userStatus)
+                listeningDriverLocation();
+        }
+
+    }
 }
