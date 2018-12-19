@@ -146,13 +146,13 @@ public class MainActivity extends AppCompatActivity {
                 String newKey = databaseReference.child(userSelect+"/location/").push().getKey();
 
                 DecimalFormat decimalFormat = new DecimalFormat("#.######");
-                String doubleLat = decimalFormat.format(location.getLatitude());
-                String doubleLng = decimalFormat.format(location.getLongitude());
+                String stringLat = decimalFormat.format(location.getLatitude());
+                String stringLng = decimalFormat.format(location.getLongitude());
 
                 /*databaseReference.child("truck-2/location/"+ newKey).child("latitude").setValue(location.getLatitude());
                 databaseReference.child("truck-2/location/"+ newKey).child("longitude").setValue(location.getLongitude());
-*/              databaseReference.child(userSelect+"/location/"+ newKey).child("latitude").setValue(doubleLat);
-                databaseReference.child(userSelect+"/location/"+ newKey).child("longitude").setValue(doubleLng);
+*/              databaseReference.child(userSelect+"/location/"+ newKey).child("latitude").setValue(stringLat);
+                databaseReference.child(userSelect+"/location/"+ newKey).child("longitude").setValue(stringLng);
 
             }
             @Override public void onStatusChanged(String provider, int status, Bundle extras) { }
