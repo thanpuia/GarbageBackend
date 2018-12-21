@@ -16,15 +16,36 @@ import android.os.Bundle;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import android.Manifest;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+    class mLocation {
+        private String latitude;
+        private String longitude;
 
+        private mLocation() {}
+
+        public mLocation(String latitude, String longitude) {
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+
+        public String getLatitude() {
+            return latitude;
+        }
+
+        public String getLongitude() {
+            return longitude;
+        }
+    }
     public DatabaseReference databaseReference;
     public LocationManager locationManager;
     public static LocationListener locationListener;
@@ -32,12 +53,14 @@ public class MainActivity extends AppCompatActivity {
 
     EditText userNameET;
     TextView statusTV;
+    Map<String,String> stringMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        stringMap = new HashMap<>();
         userNameET = findViewById(R.id.userName);
         statusTV = findViewById(R.id.statusTextView);
 
@@ -151,8 +174,16 @@ public class MainActivity extends AppCompatActivity {
 
                 /*databaseReference.child("truck-2/location/"+ newKey).child("latitude").setValue(location.getLatitude());
                 databaseReference.child("truck-2/location/"+ newKey).child("longitude").setValue(location.getLongitude());
-*/              databaseReference.child(userSelect+"/location/"+ newKey).child("latitude").setValue(stringLat);
-                databaseReference.child(userSelect+"/location/"+ newKey).child("longitude").setValue(stringLng);
+      */
+              mLocation mLocation = new mLocation(stringLat,stringLng);
+              /*databaseRefe\rence.child(userSelect+"/location/"+ newKey).child("latitude").setValue(stringLat);
+                databaseReference.child(userSelect+"/location/"+ newKey).child("longitude").setValue(stringLng);*/
+
+                stringMap.put("latitude",mLocation.getLatitude());
+                stringMap.put("longitude",mLocation.getLongitude());
+                databaseReference.child(userSelect+"/location/"+newKey).setValue(stringMap);
+                Log.i("mLocation","+"+mLocation);
+               // databaseReference.updateChildren(stringMap);
 
             }
             @Override public void onStatusChanged(String provider, int status, Bundle extras) { }
@@ -160,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
             @Override public void onProviderDisabled(String provider) { }
         };
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,800,5,locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1100,1,locationListener);
 
     }
 
