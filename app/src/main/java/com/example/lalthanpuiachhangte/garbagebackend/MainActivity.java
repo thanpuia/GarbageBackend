@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.PowerManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import android.Manifest;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +28,10 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class MainActivity extends AppCompatActivity {
+    public PowerManager powerManager;
+    public static PowerManager.WakeLock wakeLock;
     class mLocation {
         private String latitude;
         private String longitude;
@@ -51,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     public static LocationListener locationListener;
     public static String userSelect = "";
 
+
+
     EditText userNameET;
     TextView statusTV;
     Map<String,String> stringMap;
@@ -59,6 +66,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+         powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+         wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                "MyApp::MyWakelockTag");
+        wakeLock.acquire();
 
         stringMap = new HashMap<>();
         userNameET = findViewById(R.id.userName);
@@ -222,4 +235,16 @@ public class MainActivity extends AppCompatActivity {
         locationListener = null;
         Toast.makeText(this, "Location Inactive", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    protected void onStop() {
+        wakeLock.release();
+        super.onStop();
+    }
+
+    //    @Override
+//    protected void onPause() {
+//        listeningDriverLocation();
+//        super.onPause();
+//    }
 }
